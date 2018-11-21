@@ -124,7 +124,7 @@ RCT_EXPORT_METHOD(launchMiniProgram:(NSString *)userName
     WXLaunchMiniProgramReq *launchMiniProgramReq = [WXLaunchMiniProgramReq object];
     launchMiniProgramReq.userName = userName;  //拉起的小程序的username
     launchMiniProgramReq.path = path;    //拉起小程序页面的可带参路径，不填默认拉起小程序首页
-    launchMiniProgramReq.miniProgramType = miniProgramType; //拉起小程序的类型
+    launchMiniProgramReq.miniProgramType = WXMiniProgramTypeRelease; //拉起小程序的类型
     
     BOOL success = [WXApi sendReq:launchMiniProgramReq];
     callback(@[success ? [NSNull null] : INVOKE_FAILED]);
@@ -391,7 +391,7 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
 	    else {
 	        [self.bridge.eventDispatcher sendDeviceEventWithName:RCTWXEventName body:body];
 	    }
-    } else if([resp isKindOfClass:[WXLaunchMiniProgramResp class]) {
+    } else if([resp isKindOfClass:[WXLaunchMiniProgramResp class]]) {
         WXLaunchMiniProgramResp *r = (WXLaunchMiniProgramResp *)resp;
         NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
         body[@"errStr"] = r.errStr;
